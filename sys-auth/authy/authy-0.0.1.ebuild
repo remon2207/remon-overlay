@@ -7,7 +7,7 @@ HOMEPAGE="https://authy.com/"
 SRC_URI=$(/usr/bin/curl -sL https://api.snapcraft.io/api/v1/snaps/search\?q=authy | /usr/bin/awk -F '"' '{print $10}')
 SNAP_ID=$(echo "${SRC_URI}" | /usr/bin/awk -F '[/_]' '{print $8}')
 SNAP_PREV=$(echo "${SRC_URI}" | /usr/bin/awk -F '[_.]' '{print $4}')
-S="${WORKDIR}/${P}"
+S="${WORKDIR}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
