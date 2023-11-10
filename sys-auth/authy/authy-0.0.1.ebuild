@@ -2,6 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
+inherit desktop
 DESCRIPTION="Two factor authentication desktop application"
 HOMEPAGE="https://authy.com/"
 SNAP_ID="H8ZpNgIoPyvmkgxOWw5MSzsXK1wRZiHn"
@@ -22,10 +23,12 @@ src_unpack() {
 }
 
 src_install() {
-	#into "${DESTDIR}"
+	domenu "${S}/meta/gui/${PN}.desktop"
 	exeinto "${DESTDIR}"
 	insinto "${DESTDIR}"
 	doexe "${PN}" libEGL.so libGLESv2.so libffmpeg.so libvk_swiftshader.so libvulkan.so.1
 	doins chrome_100_percent.pak chrome_200_percent.pak resources.pak icudtl.dat snapshot_blob.bin v8_context_snapshot.bin
+	insopts -m0755
 	doins -r locales resources
+	dosym "${DESTDIR}/${PN}" "/usr/bin/${PN}"
 }
