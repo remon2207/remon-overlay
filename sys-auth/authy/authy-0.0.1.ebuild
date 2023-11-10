@@ -4,9 +4,10 @@
 EAPI=8
 DESCRIPTION="Two factor authentication desktop application"
 HOMEPAGE="https://authy.com/"
-SRC_URI=$(/usr/bin/curl -sL https://api.snapcraft.io/api/v1/snaps/search\?q=authy | /usr/bin/awk -F '"' '{print $10}')
-SNAP_ID=$(echo "${SRC_URI}" | /usr/bin/awk -F '[/_]' '{print $8}')
-SNAP_PREV=$(echo "${SRC_URI}" | /usr/bin/awk -F '[_.]' '{print $4}')
+FETCH=$(/usr/bin/curl -sL https://api.snapcraft.io/api/v1/snaps/search\?q=authy | /usr/bin/awk -F '"' '{print $10}')
+SNAP_ID=$(/bin/echo "${FETCH}" | /usr/bin/awk -F '[/_]' '{print $8}')
+SNAP_PREV=$(/bin/echo "${FETCH}" | /usr/bin/awk -F '[_.]' '{print $4}')
+SRC_URI="https://api.snapcraft.io/api/v1/snaps/download/${SNAP_ID}_${SNAP_PREV}.snap"
 S="${WORKDIR}/${P}"
 LICENSE="MIT"
 SLOT="0"
