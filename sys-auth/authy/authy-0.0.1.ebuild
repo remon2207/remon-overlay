@@ -28,5 +28,4 @@ src_install() {
 	doexe "${PN}" libEGL.so libGLESv2.so libffmpeg.so libvk_swiftshader.so libvulkan.so.1
 	doins chrome_100_percent.pak chrome_200_percent.pak resources.pak icudtl.dat snapshot_blob.bin v8_context_snapshot.bin
 	doins -r locales resources
-	install -Dm644 "${S}/meta/gui/authy.desktop" -t "/usr/share/applications"
 }
