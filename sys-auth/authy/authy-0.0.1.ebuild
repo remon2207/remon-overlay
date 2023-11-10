@@ -4,11 +4,11 @@
 EAPI=8
 DESCRIPTION="Two factor authentication desktop application"
 HOMEPAGE="https://authy.com/"
-FETCH=$(/usr/bin/curl -sL https://api.snapcraft.io/api/v1/snaps/search\?q=authy | /usr/bin/awk -F '"' '{print $10}')
-SNAP_ID=$(/bin/echo "${FETCH}" | /usr/bin/awk -F '[/_]' '{print $8}')
-SNAP_PREV=$(/bin/echo "${FETCH}" | /usr/bin/awk -F '[_.]' '{print $4}')
+SNAP_ID="H8ZpNgIoPyvmkgxOWw5MSzsXK1wRZiHn"
+SNAP_PREV="22"
 SRC_URI="https://api.snapcraft.io/api/v1/snaps/download/${SNAP_ID}_${SNAP_PREV}.snap"
-S="${WORKDIR}/${P}"
+SNAP_DIR="${PORTAGE_BUILDDIR}/distdir"
+DESTDIR="/opt/${PN}"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
@@ -16,13 +16,17 @@ IUSE=""
 RDEPEND="sys-fs/squashfs-tools"
 DEPEND="${RDEPEND}"
 
-src_prepare() {
+src_unpack() {
 	echo "Extracting snap file..."
-	unsquashfs -q -f -d "${WORKDIR}/${P}" "${SNAP_ID}_${SNAP_PREV}.snap"
+	unsquashfs -q -f -d "${S}" "${SNAP_DIR}/${SNAP_ID}_${SNAP_PREV}.snap"
 }
 
 src_install() {
-	install -d "/opt/${PN}"
-	cp -a "${S}/." "/opt/${PN}"
-	rm -rf "/opt/${PN}/"/{data-dir,gnome-platform,lib,meta,scripts,usr,*.sh}
+	#into "${DESTDIR}"
+	exeinto "${DESTDIR}"
+	insinto "${DESTDIR}"
+	doexe "${PN}" libEGL.so libGLESv2.so libffmpeg.so libvk_swiftshader.so libvulkan.so.1
+	doins chrome_100_percent.pak chrome_200_percent.pak resources.pak icudtl.dat snapshot_blob.bin v8_context_snapshot.bin
+	doins -r locales resources
+	install -Dm644 "${S}/meta/gui/authy.desktop" -t "/usr/share/applications"
 }
