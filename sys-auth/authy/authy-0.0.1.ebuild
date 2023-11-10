@@ -22,13 +22,21 @@ src_unpack() {
 	unsquashfs -q -f -d "${S}" "${SNAP_DIR}/${SNAP_ID}_${SNAP_PREV}.snap"
 }
 
+src_prepare() {
+	eapply_user
+	mv "${S}/meta/gui/icon.png" "${S}/meta/gui/authy.png"
+	sed -i 's/^Icon=.*/Icon=Authy/' "${S}/meta/gui/${PN}.desktop"
+}
+
 src_install() {
 	domenu "${S}/meta/gui/${PN}.desktop"
+	doicon -s 256 "${S}/meta/gui/authy.png"
 	exeinto "${DESTDIR}"
 	insinto "${DESTDIR}"
 	doexe "${PN}" libEGL.so libGLESv2.so libffmpeg.so libvk_swiftshader.so libvulkan.so.1
 	doins chrome_100_percent.pak chrome_200_percent.pak resources.pak icudtl.dat snapshot_blob.bin v8_context_snapshot.bin
 	insopts -m0755
 	doins -r locales resources
+	doins chrome_crashpad_handler
 	dosym "${DESTDIR}/${PN}" "/usr/bin/${PN}"
 }
