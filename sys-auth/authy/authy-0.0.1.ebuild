@@ -30,7 +30,7 @@ src_install() {
 	doicon --size 256 "${S}/meta/gui/authy.png"
 	exeinto "${DESTDIR}"
 	insinto "${DESTDIR}"
-	doexe "${PN}" ./*.so ./*.so* ./chrome_crashpad_handler
+	doexe "${PN}" ./*.so* ./chrome_crashpad_handler
 	doins ./*.pak ./*.bin ./*.dat ./*.json
 	insopts --mode=0755
 	doins -r ./locales ./resources
