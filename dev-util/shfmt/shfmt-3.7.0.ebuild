@@ -5,9 +5,8 @@ EAPI=8
 inherit go-module
 DESCRIPTION='A shell parser, formatter, and interpreter with bash support'
 HOMEPAGE='https://github.com/mvdan/sh'
-SRC_URI="
-	https://github.com/mvdan/sh/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz
-	${P}-deps.tar.xz"
+SRC_URI="https://github.com/mvdan/sh/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI+=" ${P}-deps.tar.xz"
 S="${WORKDIR}/sh-${PV}"
 LICENSE='BSD'
 SLOT='0'
