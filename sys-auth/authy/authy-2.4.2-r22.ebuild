@@ -22,7 +22,7 @@ src_prepare() {
 	eapply_user
 
 	mv "${S}/meta/gui/"{icon,"${PN}"}'.png'
-	sed --in-place --expression='s/^\(Icon=\).*/\1Authy/' "${S}/meta/gui/${PN}.desktop"
+	sed --in-place --expression='s/^\(Icon=\).*/\1authy/' "${S}/meta/gui/${PN}.desktop"
 }
 
 src_install() {
