@@ -12,7 +12,7 @@ DESTDIR="/opt/${PN}"
 LICENSE='MIT'
 SLOT='0'
 KEYWORDS='~amd64'
-DEPEND='sys-fs/squashfs-tools'
+BDEPEND='sys-fs/squashfs-tools'
 
 src_unpack() {
 	unsquashfs -quiet -force -dest "${S}" "${DISTDIR}/${SNAP_ID}_${SNAP_PREV}.snap"
